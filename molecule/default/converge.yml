@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include ansible-role-elastic-apm"
+      include_role:
+        name: "ansible-role-elastic-apm"

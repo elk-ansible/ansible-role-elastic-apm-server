@@ -1,0 +1,3 @@
+---
+# defaults file for ansible-role-elastic-apm
+es_enable_ssl: true

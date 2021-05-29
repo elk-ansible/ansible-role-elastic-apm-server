@@ -1,0 +1,18 @@
+---
+# tasks file for ansible-role-elastic-apm
+- name: include elastic-apm.yml
+  include: elastic-apm.yml
+  tags:
+    - install
+
+- name: include elastic-apm-config.yml
+  include: elastic-apm-config.yml
+  tags:
+    - config
+
+
+- name: include elastic-apm-ssl.yml
+  include: elastic-apm-ssl.yml
+  when: es_enable_ssl
+  tags:
+    - config

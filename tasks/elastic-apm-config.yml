@@ -1,0 +1,5 @@
+---
+# Task Config
+- name: Config File
+  debug:
+    msg: Hello, World from Config Task!

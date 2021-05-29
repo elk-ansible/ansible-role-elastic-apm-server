@@ -1,0 +1,5 @@
+---
+# Task SSL
+- name: SSL and keystores
+  debug:
+    msg: Hello, World from SSL Task!
