@@ -1,5 +1,0 @@
----
-# Task main
-- name: Main Install File
-  debug:
-    msg: Hello, World from main Install Task!

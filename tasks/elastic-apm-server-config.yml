@@ -1,0 +1,13 @@
+---
+# Task Config
+- name: Copy Configuration File
+  become: yes
+  template:
+    src: apm-server.yml.j2
+    dest: "{{ es_conf_dir }}/apm-server.yml"
+    owner: root
+    group: "{{ es_group }}"
+    mode: "640"
+    force: yes
+  register: system_change
+  notify: restart apm-server

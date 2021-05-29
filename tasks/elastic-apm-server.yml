@@ -1,0 +1,9 @@
+---
+# Task main
+- name: Include Debian Elasticsearch
+  include: elastic-apm-server-Debian.yml
+  when: ansible_os_family == 'Debian'
+
+- name: Include RedHat Elasticsearch
+  include: elastic-apm-server-RedHat.yml
+  when: ansible_os_family == 'RedHat'

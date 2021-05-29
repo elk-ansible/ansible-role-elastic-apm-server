@@ -1,0 +1,18 @@
+---
+- name: Debian - Import Elasticsearch PGP key
+  ansible.builtin.apt_key:
+    url: "{{es_repo_base}}/GPG-KEY-elasticsearch"
+    state: present
+
+- name: Debian - Download elastic APM Server from url
+  get_url: url={% if es_custom_package_url is defined %}{{ es_custom_package_url }}{% else %}{{ es_package_url }}-{{ es_version }}.deb{% endif %} dest=/tmp/apm-server-{{ es_version }}-amd64.deb validate_certs=no
+  when: not es_use_repository
+
+- name: Debian - Ensure elastic APM Server is installed from downloaded package
+  become: yes
+  apt: deb=/tmp/apm-server-{{ es_version }}-amd64.deb
+  when: not es_use_repository
+  register: elastic_app_search_install_from_package
+  notify: restart apm-server
+  environment:
+    ES_PATH_CONF: "{{ es_conf_dir }}"

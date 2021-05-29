@@ -2,4 +2,4 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - ansible-role-elastic-apm
+    - ansible-role-elastic-apm-server

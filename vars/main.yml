@@ -1,2 +1,4 @@
 ---
 # vars file for ansible-role-elastic-apm
+es_package_url: "https://artifacts.elastic.co/downloads/apm-server/apm-server"
+apm_server_home: "/usr/share/apm-server"

@@ -1,2 +1,16 @@
 ---
-# handlers file for ansible-role-elastic-apm
+# handlers file for ansible-role-elastic-apm-server
+- name: reload systemd configuration
+  become: yes
+  systemd:
+    daemon_reload: true
+
+# Restart service and ensure it is enabled
+
+- name: restart apm-server
+  become: yes
+  service: name=apm-server state=restarted enabled=yes
+  when:
+    - es_restart_on_change
+    - es_start_service
+  register: es_restarted
