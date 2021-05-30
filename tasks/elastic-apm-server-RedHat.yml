@@ -3,6 +3,7 @@
   ansible.builtin.rpm_key:
     state: present
     key: "{{es_repo_base}}/GPG-KEY-elasticsearch"
+  become: true
 
 - name: RedHat - Install Elastic APM Server from url
   become: yes

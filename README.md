@@ -23,9 +23,24 @@ Example Playbook
 
 Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
 
-    - hosts: servers
+    - name: Install and Configure Elastic APM Server
+      hosts: apm-server
       roles:
-         - { role: username.rolename, x: 42 }
+      - role: apm-server
+        vars:
+            apm_server_host: "{{ansible_default_ipv4.address}}"
+            apm_kibana_host: "kibana.example.com"
+            apm_kibana_user: elastic
+            apm_kibana_pass: changeme
+            es_output_ssl_ca: "files/certs/es.example.com.ca"
+            es_output_hosts: ["es1:9200","es2:9200"]
+            es_output_user: elastic
+            es_output_pass: changeme
+            es_version: 7.12.1
+            es_mon_host: ["es1-mon:9200","es2-mon:9200","es3-mon:9200",]
+            es_mon_user: elastic
+            es_mon_pass: changeme
+
 
 License
 -------

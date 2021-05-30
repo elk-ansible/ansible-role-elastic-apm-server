@@ -8,7 +8,7 @@ es_restart_on_change: true
 
 es_user: apm-server
 es_group: apm-server
-
+path_data: "/var/lib/apm-server"
 es_conf_dir: "/etc/apm-server"
 es_ssl_certificate_path: "{{ es_conf_dir }}/certs"
 es_ssl_verification_mode:  "certificate"
@@ -19,14 +19,14 @@ es_enable_keystore: true
 #============================= X-pack Monitoring =============================
 es_mon_enable: ture
 es_mon_host:  ["es1-mon.com:9200","es2-mon.com:9200","es3-mon.com:9200"]
-es_mon_user: "elastic"
+es_mon_user: "apm_system"
 es_mon_pass: "changeme"
 es_mon_verification_mode: "certificate"
 ################################ APM Server ################################
 apm_server_host: "apm.example.com"
 apm_server_port: 8200
 apm_kibana_enabled: true
-apm_kibana_host: "kibana.example.com:5601"
+apm_kibana_host: "kibana.example.com"
 apm_kibana_port: 5601
 apm_kibana_protocol: "https"
 apm_kibana_user: "elastic"
