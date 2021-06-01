@@ -30,16 +30,16 @@ Including an example of how to use your role (for instance, with variables passe
         vars:
             apm_server_host: "{{ansible_default_ipv4.address}}"
             apm_kibana_host: "kibana.example.com"
-            apm_kibana_user: elastic
-            apm_kibana_pass: changeme
+            apm_kibana_user: kibana_system
+            apm_kibana_pass: "{{kibana_system_pass}}"
             es_output_ssl_ca: "files/certs/es.example.com.ca"
             es_output_hosts: ["es1:9200","es2:9200"]
             es_output_user: elastic
             es_output_pass: changeme
             es_version: 7.12.1
             es_mon_host: ["es1-mon:9200","es2-mon:9200","es3-mon:9200",]
-            es_mon_user: elastic
-            es_mon_pass: changeme
+            es_mon_user: apm_system
+            es_mon_pass: "{{apm_system_pass }}"
 
 
 License
