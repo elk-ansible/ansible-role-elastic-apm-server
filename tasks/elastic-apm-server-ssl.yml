@@ -21,3 +21,19 @@
   when: es_output_ssl_ca and es_output_ssl_enabled
   notify: restart apm-server
   register: copy_es_cafile
+# Server APM Server Key and Certificate
+- name: Upload APM Server SSL/TLS Key and Certificate
+  become: yes
+  copy:
+    src: "{{ item }}"
+    dest: "{{ es_ssl_certificate_path }}/{{ item | basename }}"
+    owner: "{{ es_user }}"
+    group: "{{ es_group }}"
+    mode: "640"
+  with_items:
+    - "{{ apm_ssl_key }}"
+    - "{{ apm_ssl_cert }}"
+  when: es_enable_ssl and apm_ssl_enabled
+  notify: restart apm-server
+  register: copy_apm_ssl_certs
+

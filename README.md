@@ -1,7 +1,7 @@
 Role Name
 =========
 
-A brief description of the role goes here.
+Ansible Role for Elasticsearch APM server
 
 Requirements
 ------------
@@ -16,7 +16,8 @@ A description of the settable variables for this role should go here, including 
 Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+Elastic-Kibana Cluster with x-pack and password set for the `apm_system` user. 
+Kibana and Elasticsearch are using the same PKCS12 file for the htts communication.
 
 Example Playbook
 ----------------
@@ -40,6 +41,56 @@ Including an example of how to use your role (for instance, with variables passe
             es_mon_host: ["es1-mon:9200","es2-mon:9200","es3-mon:9200",]
             es_mon_user: apm_system
             es_mon_pass: "{{apm_system_pass }}"
+            apm_ssl_key: "files/certs/es.example.com.key"
+            apm_ssl_key_pass: "{{cert_pass}}"
+            apm_ssl_cert: "files/certs/es.example.com.crt"
+
+
+
+SSL Certificates How To
+-------
+1. Generate Cert and Key file from PCS12
+```shell
+export cert_file=es1.dev.example.com.pfx
+export KEY_PASS=changeme
+openssl pkcs12 -in $cert_file -nocerts -nodes  -out  ${cert_file%.pfx}.key -passin "pass:${KEY_PASS}" -passout "pass:${KEY_PASS}"
+openssl pkcs12 -in  $cert_file -clcerts -nokeys -out  ${cert_file%.pfx}.crt -passin "pass:${KEY_PASS}"
+```
+
+2. Get the OpenSSL CA file
+```shell
+openssl s_client -showcerts -connect es1.dev.example.com:9200 </dev/null 2>/dev/null|openssl x509 -outform PEM >es.example.com.ca
+```            
+Example Playbook For Removing APM Server
+----------------
+
+Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+
+    - hosts:  apm-server-node
+      tasks:
+        - service:
+            name: apm-server.service
+            state: stopped
+          become: true
+        - yum:
+            name: apm-server
+            state: absent
+          become: true
+        - ansible.builtin.systemd:
+            daemon_reexec: yes
+          become: true
+        - file:
+            path: "{{item}}"
+            state: absent
+          with_items:
+            - /etc/apm-server
+            - /usr/share/apm-server
+            - /var/lib/apm-server
+          become: true
+    
+
+
+
 
 
 License
